@@ -16,7 +16,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.camera2raw"
+    package="com.myor.android.camera2raw"
     android:versionCode="1"
     android:versionName="1.0">
 
@@ -32,10 +32,12 @@
     <application android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/MaterialTheme">
+        android:theme="@style/Theme.AppCompat.Light"
+        android:supportsRtl="true">
 
-        <activity android:name="com.example.android.camera2raw.CameraActivity"
-                  android:label="@string/app_name">
+        <activity android:name="com.myor.android.camera2raw.ui.activity.MainActivity"
+                  android:label="@string/app_name"
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

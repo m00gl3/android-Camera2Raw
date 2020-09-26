@@ -25,23 +25,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="90dp"
             android:orientation="vertical"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:padding="5dp"
             android:background="#fff"
-
             >
-
-            <TextView
-                android:id="@+id/txtPatientDetailsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:textSize="18dp"
-                android:text="@string/details_about_user"/>
 
             <TextView
                 android:layout_marginTop="20dp"
@@ -50,14 +41,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="18dp"
-                android:text="@string/patient_details_photo_instructions"/>
+                android:text="@string/dont_move_fingers"/>
 
         </LinearLayout>
 
         <include layout="@layout/preview_layout"/>
     </FrameLayout>
-
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

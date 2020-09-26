@@ -14,17 +14,23 @@
  * limitations under the License.
  */
 
-package com.example.android.camera2raw;
+package com.myor.android.camera2raw.ui.fragments;
 
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
+import androidx.fragment.app.DialogFragment;
+
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Point;
@@ -55,8 +61,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.support.v13.app.FragmentCompat;
-import android.support.v4.app.ActivityCompat;
+
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
@@ -66,7 +71,14 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.myor.android.camera2raw.ui.AutoFitTextureView;
+import com.myor.android.camera2raw.CloudManager;
+import com.myor.android.camera2raw.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -119,7 +131,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * </ul>
  */
 public class Camera2RawFragment extends Fragment
-        implements View.OnClickListener, FragmentCompat.OnRequestPermissionsResultCallback {
+        implements View.OnClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     /**
      * Conversion from screen rotation to JPEG orientation.
@@ -234,7 +246,16 @@ public class Camera2RawFragment extends Fragment
     /**
      * An {@link AutoFitTextureView} for camera preview.
      */
-    private AutoFitTextureView mTextureView;
+    private static AutoFitTextureView mTextureView;
+
+    private static ImageView mPreviewImageView;
+
+    private static RelativeLayout mIsDetailsCorrectLayout;
+
+    private static String mImagePath = "";
+
+    private Button btnApprove;
+    private Button btnRetry;
 
     /**
      * An additional thread for running tasks that shouldn't block the UI.  This is used for all
@@ -503,6 +524,34 @@ public class Camera2RawFragment extends Fragment
 
     };
 
+    private static void showImage(String path) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 8;
+
+        try {
+            Bitmap previewBitmapPicture = BitmapFactory.decodeFile(path);
+            mPreviewImageView.setImageBitmap(previewBitmapPicture);
+
+            // Set Visibility
+            mIsDetailsCorrectLayout.setVisibility(View.VISIBLE);
+            mPreviewImageView.setVisibility(View.VISIBLE);
+            mTextureView.setVisibility(View.INVISIBLE);
+
+            mImagePath = path;
+        }
+        catch (Exception ex) {
+            Log.d("LOG_TAG", ex.getMessage());
+        }
+
+    }
+
+    private void hidePreviewImage() {
+        // Set Visibility
+        mIsDetailsCorrectLayout.setVisibility(View.INVISIBLE);
+        mPreviewImageView.setVisibility(View.INVISIBLE);
+        mTextureView.setVisibility(View.VISIBLE);
+    }
+
     /**
      * A {@link CameraCaptureSession.CaptureCallback} that handles the still JPEG and RAW capture
      * request.
@@ -567,6 +616,8 @@ public class Camera2RawFragment extends Fragment
             }
 
             showToast(sb.toString());
+
+          // Navigation.findNavController(getActivity(), R.id.picture).navigate(R.id.endFragment);
         }
 
         @Override
@@ -581,6 +632,14 @@ public class Camera2RawFragment extends Fragment
             showToast("Capture failed!");
         }
 
+    };
+
+    private static final Handler mImageCompleteHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            // Path is (String) msg.obj
+            showImage((String) msg.obj);
+        }
     };
 
     /**
@@ -603,14 +662,38 @@ public class Camera2RawFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_camera2_basic, container, false);
+
+
+
+        return inflater.inflate(R.layout.fragment_camera2_raw, container, false);
     }
+
+
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         view.findViewById(R.id.picture).setOnClickListener(this);
-        view.findViewById(R.id.info).setOnClickListener(this);
+
+        mIsDetailsCorrectLayout = (RelativeLayout) view.findViewById(R.id.isDetailsCorrectLayout);
+        mPreviewImageView = (ImageView) view.findViewById(R.id.preview);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
+
+        btnApprove = (Button) view.findViewById(R.id.btnApprove);
+        btnApprove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Pass imagePath argument to next fragment
+                Navigation.findNavController(view).navigate(R.id.endFragment);
+            }
+        });
+
+        btnRetry = (Button) view.findViewById(R.id.btnRetry);
+        btnRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hidePreviewImage();
+            }
+        });
 
         // Setup a new OrientationEventListener.  This is used to handle rotation events like a
         // 180 degree rotation that do not normally trigger a call to onCreate to do view re-layout
@@ -806,7 +889,7 @@ public class Camera2RawFragment extends Fragment
         if (shouldShowRationale()) {
             PermissionConfirmationDialog.newInstance().show(getChildFragmentManager(), "dialog");
         } else {
-            FragmentCompat.requestPermissions(this, CAMERA_PERMISSIONS, REQUEST_CAMERA_PERMISSIONS);
+            ActivityCompat.requestPermissions(this.getActivity(), CAMERA_PERMISSIONS, REQUEST_CAMERA_PERMISSIONS);
         }
     }
 
@@ -832,7 +915,7 @@ public class Camera2RawFragment extends Fragment
      */
     private boolean shouldShowRationale() {
         for (String permission : CAMERA_PERMISSIONS) {
-            if (FragmentCompat.shouldShowRequestPermissionRationale(this, permission)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), permission)) {
                 return true;
             }
         }
@@ -1024,6 +1107,8 @@ public class Camera2RawFragment extends Fragment
             builder.set(CaptureRequest.CONTROL_AWB_MODE,
                     CaptureRequest.CONTROL_AWB_MODE_AUTO);
         }
+
+        // Set Color Filter
     }
 
     /**
@@ -1423,6 +1508,9 @@ public class Camera2RawFragment extends Fragment
                     public void onScanCompleted(String path, Uri uri) {
                         Log.i(TAG, "Scanned " + path + ":");
                         Log.i(TAG, "-> uri=" + uri);
+
+                        sendImageCompletionToUi(path);
+
                     }
                 });
             }
@@ -1746,6 +1834,12 @@ public class Camera2RawFragment extends Fragment
         return (sensorOrientation - deviceOrientation + 360) % 360;
     }
 
+    private static void sendImageCompletionToUi(String path) {
+        Message message = Message.obtain();
+        message.obj = path;
+        mImageCompleteHandler.sendMessage(message);
+    }
+
     /**
      * Shows a {@link Toast} on the UI thread.
      *
@@ -1829,7 +1923,7 @@ public class Camera2RawFragment extends Fragment
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            FragmentCompat.requestPermissions(parent, CAMERA_PERMISSIONS,
+                            ActivityCompat.requestPermissions(parent.getActivity(), CAMERA_PERMISSIONS,
                                     REQUEST_CAMERA_PERMISSIONS);
                         }
                     })

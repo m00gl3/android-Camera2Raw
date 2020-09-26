@@ -14,7 +14,26 @@
  limitations under the License.
 -->
 <resources>
-    <string name="picture">Picture</string>
-    <string name="description_info">Info</string>
+    <string name="enter_patient_id">To begin, enter patient number</string>
+    <string name="action_continue">Continue</string>
+    <string name="patient_number">Patient Number</string>
+
     <string name="request_permission">This app needs camera permission.</string>
+    <string name="description_info">Info</string>
+    <string name="picture">Take photo</string>
+    <string name="details_about_user">Details about the user</string>
+    <string name="patient_details_photo_instructions">Please take a photo of the patient\'s blood work. Take notice that their personal details are obscured.</string>
+    <string name="retry">Capture again</string>
+    <string name="approve">Approve</string>
+    <string name="are_all_details_visible">Is all needed information visible and readable?</string>
+
+    <string name="hand_photo_instructions_title">Fingernail photo instructions</string>
+    <string name="hand_photo_instructions">Instructions text</string>
+
+    <string name="dont_move_fingers">Please guide patient to remain still</string>
+
+    <string name="end_process">To finish the process please press button</string>
+    <string name="action_submit">Submit</string>
+    <string name="session_completed">Session Completed</string>
+
 </resources>

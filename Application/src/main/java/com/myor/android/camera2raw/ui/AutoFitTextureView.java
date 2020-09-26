@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.camera2raw;
+package com.myor.android.camera2raw.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

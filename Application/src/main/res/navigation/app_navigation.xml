@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/firstFragment">
+
+    <!-- First Fragment -->
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="com.myor.android.camera2raw.ui.fragments.FirstFragment"
+        android:label="Enter Patient Number"
+        tools:layout="@layout/fragment_my_home">
+
+        <action android:id="@+id/action_firstFragment_to_jpegFragment"
+            app:destination="@id/jpegFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <!-- Patient Details Photo Fragment -->
+    <fragment android:id="@+id/jpegFragment"
+        android:name="com.myor.android.camera2raw.ui.fragments.Camera2JpegFragment"
+        android:label="Patient Information Camera"
+        tools:layout="@layout/fragment_camera2_basic">
+
+        <action android:id="@+id/action_jpegFragment_to_handPhotoInstructionsFragment"
+            app:destination="@id/handPhotoInstructionsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <argument
+            android:name="patientNumber"
+            app:argType="string"
+            android:defaultValue="0" />
+    </fragment>
+
+    <!-- Hands Photo Instructions Fragment -->
+    <fragment android:id="@+id/handPhotoInstructionsFragment"
+        android:name="com.myor.android.camera2raw.ui.fragments.HandPhotoInstructionsFragment"
+        android:label="Hand Photo Instructions"
+        tools:layout="@layout/fragment_hand_photo_instructions">
+
+        <action android:id="@+id/action_handPhotoInstructionsFragment_to_rawFragment"
+            app:destination="@id/rawFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+
+    <!-- Raw Photo Fragment -->
+    <fragment android:id="@+id/rawFragment"
+        android:name="com.myor.android.camera2raw.ui.fragments.Camera2RawFragment"
+        android:label="Hand Camera"
+        tools:layout="@layout/fragment_camera2_raw">
+
+        <action android:id="@+id/action_rawFragment_to_endFragment"
+            app:destination="@id/rawFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+    </fragment>
+
+    <!-- Last Fragment -->
+    <fragment android:id="@+id/endFragment"
+        android:name="com.myor.android.camera2raw.ui.fragments.EndFragment"
+        android:label="Hand Camera"
+        tools:layout="@layout/fragment_finish">
+
+    </fragment>
+</navigation>

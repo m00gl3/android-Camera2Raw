@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enter_patient_id">להתחלה, אנא הקש את מספר המטופל</string>
+    <string name="action_continue">המשך</string>
+    <string name="patient_number">מספר מטופל</string>
+
+    <string name="request_permission">האפליקציה צריכה הרשאות מצלמה</string>
+    <string name="description_info">מידע</string>
+    <string name="picture">צלם</string>
+    <string name="details_about_user">מידע על המשתמש</string>
+    <string name="patient_details_photo_instructions">אנא צלם את דף תוצאות בדיקת הדם של המטופל, שים לב שהפרטים האישיים מוסתרים</string>
+    <string name="retry">צלם שוב</string>
+    <string name="approve">אישור</string>
+    <string name="are_all_details_visible">האם כל הפרטים הדרושים נמצאים בתמונה וברורים לקריאה?</string>
+
+    <string name="hand_photo_instructions_title">הוראות לצילום הציפורניים</string>
+    <string name="hand_photo_instructions">this is text</string>
+
+    <string name="dont_move_fingers">אנא הנחה את המטופל להימנע מתנועה של האצבעות</string>
+
+    <string name="end_process">לסיום התהליך אנא לחץ</string>
+    <string name="action_submit">הגש</string>
+    <string name="session_completed">Session Completed</string>
+
+</resources>
