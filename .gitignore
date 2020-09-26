@@ -2,3 +2,4 @@
 /.gradle/
 /Application/build/
 /build/android-profile/
+/Application/google-services.json
