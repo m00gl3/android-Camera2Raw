@@ -65,6 +65,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -250,6 +251,8 @@ public class Camera2JpegFragment extends Fragment
 
     private static RelativeLayout mIsDetailsCorrectLayout;
 
+    private static String mPatientDetailsJpegPath;
+
     private Button btnApprove;
     private Button btnRetry;
 
@@ -352,6 +355,10 @@ public class Camera2JpegFragment extends Fragment
      * taking too long.
      */
     private long mCaptureTimer;
+
+    private String mPatientNumber;
+
+    private static ProgressBar progressBar;
 
     //**********************************************************************************************
 
@@ -515,6 +522,8 @@ public class Camera2JpegFragment extends Fragment
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 8;
 
+        mPatientDetailsJpegPath = path;
+
         try {
             Bitmap previewBitmapPicture = BitmapFactory.decodeFile(path);
             mPreviewImageView.setImageBitmap(previewBitmapPicture);
@@ -628,6 +637,8 @@ public class Camera2JpegFragment extends Fragment
     private static final Handler mImageCompleteHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
+            progressBar.setVisibility(View.INVISIBLE);
+
             // Path is (String) msg.obj
             showImage((String) msg.obj);
         }
@@ -648,6 +659,11 @@ public class Camera2JpegFragment extends Fragment
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         view.findViewById(R.id.picture).setOnClickListener(this);
 
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar_cyclic);
+
+        // To move on to next fragment
+        mPatientNumber = FirstFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+
         mIsDetailsCorrectLayout = (RelativeLayout) view.findViewById(R.id.isDetailsCorrectLayout);
         mPreviewImageView = (ImageView) view.findViewById(R.id.preview);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
@@ -656,7 +672,12 @@ public class Camera2JpegFragment extends Fragment
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.handPhotoInstructionsFragment);
+                Camera2JpegFragmentDirections.ActionJpegFragmentToHandPhotoInstructionsFragment action = Camera2JpegFragmentDirections.actionJpegFragmentToHandPhotoInstructionsFragment();
+                action.setPatientNumber(mPatientNumber);
+                action.setPatientDetailsJpeg(mPatientDetailsJpegPath);
+                Navigation.findNavController(view).navigate(action);
+
+              //  Navigation.findNavController(view).navigate(R.id.handPhotoInstructionsFragment);
             }
         });
 
@@ -1188,7 +1209,11 @@ public class Camera2JpegFragment extends Fragment
      * auto-white-balance to converge.
      */
     private void takePicture() {
+
+
         synchronized (mCameraStateLock) {
+            progressBar.setVisibility(View.VISIBLE);
+
             mPendingUserCaptures++;
 
             // If we already triggered a pre-capture sequence, or are in a state where we cannot

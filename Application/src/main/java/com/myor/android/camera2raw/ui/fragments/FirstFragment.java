@@ -53,7 +53,7 @@ public class FirstFragment extends Fragment {
 
     private void enableSubmitIfReady() {
 
-        boolean isReady = patientId.getText().toString().length() > 3;
+        boolean isReady = true; // patientId.getText().toString().length() > 3;
         btnContinue.setEnabled(isReady);
     }
 
@@ -80,15 +80,14 @@ public class FirstFragment extends Fragment {
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.jpegFragment);
+              //  Navigation.findNavController(view).navigate(R.id.jpegFragment);
 
-                /* EditText userText = getView().findViewById(R.id.userText);
+                EditText editTxtPatientNumber = getView().findViewById(R.id.editTxtPatientNumber);
 
-                MainFragmentDirections.MainToSecond action =
-                        MainFragmentDirections.mainToSecond();
+                FirstFragmentDirections.ActionFirstFragmentToJpegFragment action = FirstFragmentDirections.actionFirstFragmentToJpegFragment();
+                action.setPatientNumber(editTxtPatientNumber.getText().toString());
 
-                action.setMessage(userText.getText().toString());
-                Navigation.findNavController(view).navigate(action); */
+                Navigation.findNavController(view).navigate(action);
             }
         });
     }

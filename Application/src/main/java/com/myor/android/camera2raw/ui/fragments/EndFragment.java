@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.myor.android.camera2raw.CloudManager;
 import com.myor.android.camera2raw.R;
@@ -25,6 +26,12 @@ import com.myor.android.camera2raw.ui.AutoFitTextureView;
 public class EndFragment extends Fragment implements MyCallback {
 
     private static CloudManager mCloudManager;
+
+    private String mPatientNumber;
+    private String mPatientDetailsJpegPath;
+    private String mPatientDetailsRawPath;
+
+    private static ProgressBar progressBar;
 
     public EndFragment() {
         // Required empty public constructor
@@ -56,6 +63,12 @@ public class EndFragment extends Fragment implements MyCallback {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+        mPatientNumber = HandPhotoInstructionsFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientDetailsJpegPath = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
+        mPatientDetailsRawPath = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientDetailsRaw();
+
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar_cyclic);
+
         Button btnSubmit = view.findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -73,6 +73,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -252,10 +253,13 @@ public class Camera2RawFragment extends Fragment
 
     private static RelativeLayout mIsDetailsCorrectLayout;
 
+    private static String mPatientDetailsRawPath;
+
     private static String mImagePath = "";
 
     private Button btnApprove;
     private Button btnRetry;
+    private static ProgressBar progressBar;
 
     /**
      * An additional thread for running tasks that shouldn't block the UI.  This is used for all
@@ -366,6 +370,9 @@ public class Camera2RawFragment extends Fragment
      * taking too long.
      */
     private long mCaptureTimer;
+
+    private String mPatientNumber;
+    private String mPatientDetailsJpegPath;
 
     //**********************************************************************************************
 
@@ -528,6 +535,8 @@ public class Camera2RawFragment extends Fragment
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 8;
 
+        mPatientDetailsRawPath = path;
+
         try {
             Bitmap previewBitmapPicture = BitmapFactory.decodeFile(path);
             mPreviewImageView.setImageBitmap(previewBitmapPicture);
@@ -637,6 +646,8 @@ public class Camera2RawFragment extends Fragment
     private static final Handler mImageCompleteHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
+            progressBar.setVisibility(View.INVISIBLE);
+
             // Path is (String) msg.obj
             showImage((String) msg.obj);
         }
@@ -672,18 +683,31 @@ public class Camera2RawFragment extends Fragment
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+        mPatientNumber = HandPhotoInstructionsFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientDetailsJpegPath = HandPhotoInstructionsFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
+
+        Log.d("MyOr", "mPatientNumber = " + mPatientNumber);
+        Log.d("MyOr", "mPatientDetailsJpegPath = " + mPatientDetailsJpegPath);
+
         view.findViewById(R.id.picture).setOnClickListener(this);
 
         mIsDetailsCorrectLayout = (RelativeLayout) view.findViewById(R.id.isDetailsCorrectLayout);
         mPreviewImageView = (ImageView) view.findViewById(R.id.preview);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
 
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar_cyclic);
+
         btnApprove = (Button) view.findViewById(R.id.btnApprove);
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Pass imagePath argument to next fragment
-                Navigation.findNavController(view).navigate(R.id.endFragment);
+                Camera2RawFragmentDirections.ActionRawFragmentToEndFragment action = Camera2RawFragmentDirections.actionRawFragmentToEndFragment();
+
+                action.setPatientNumber(mPatientNumber);
+                action.setPatientDetailsJpeg(mPatientDetailsJpegPath);
+                action.setPatientDetailsRaw(mPatientDetailsRawPath);
+
+                Navigation.findNavController(view).navigate(action);
             }
         });
 
@@ -1242,6 +1266,8 @@ public class Camera2RawFragment extends Fragment
      * auto-white-balance to converge.
      */
     private void takePicture() {
+        progressBar.setVisibility(View.VISIBLE);
+
         synchronized (mCameraStateLock) {
             mPendingUserCaptures++;
 

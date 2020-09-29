@@ -22,6 +22,8 @@ import com.myor.android.camera2raw.ui.AutoFitTextureView;
  * create an instance of this fragment.
  */
 public class HandPhotoInstructionsFragment extends Fragment {
+    private String mPatientNumber;
+    private String mPatientDetailsJpegPath;
 
     public HandPhotoInstructionsFragment() {
         // Required empty public constructor
@@ -49,19 +51,18 @@ public class HandPhotoInstructionsFragment extends Fragment {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
+
+        mPatientNumber = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientDetailsJpegPath = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
+
         Button btnContinue = view.findViewById(R.id.btnContinue);
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.rawFragment);
-
-                /* EditText userText = getView().findViewById(R.id.userText);
-
-                MainFragmentDirections.MainToSecond action =
-                        MainFragmentDirections.mainToSecond();
-
-                action.setMessage(userText.getText().toString());
-                Navigation.findNavController(view).navigate(action); */
+                HandPhotoInstructionsFragmentDirections.ActionHandPhotoInstructionsFragmentToRawFragment action = HandPhotoInstructionsFragmentDirections.actionHandPhotoInstructionsFragmentToRawFragment();
+                action.setPatientNumber(mPatientNumber);
+                action.setPatientDetailsJpeg(mPatientDetailsJpegPath);
+                Navigation.findNavController(view).navigate(action);
             }
         });
     }
