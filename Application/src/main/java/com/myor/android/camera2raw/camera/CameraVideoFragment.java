@@ -84,9 +84,9 @@ public abstract class CameraVideoFragment extends BaseFragment implements MediaR
 
     private File mCurrentFile;
 
-    private static final String VIDEO_DIRECTORY_NAME = "AndroidWave";
+    private static final String VIDEO_DIRECTORY_NAME = "MyOr";
 
-    private static final int MAX_RECORDING_SECONDS = 5;
+    private static final int MAX_RECORDING_MS = 5000;
 
     /**
      * An {@link AutoFitTextureView} for camera preview.
@@ -583,7 +583,7 @@ public abstract class CameraVideoFragment extends BaseFragment implements MediaR
 
         // a notification will be sent to the MediaRecorder.OnInfoListener with a "what" code of
         // MEDIA_RECORDER_INFO_MAX_DURATION_REACHED and recording will be stopped
-        mMediaRecorder.setMaxDuration(MAX_RECORDING_SECONDS);
+        mMediaRecorder.setMaxDuration(MAX_RECORDING_MS);
 
         mMediaRecorder.setOnInfoListener(this);
 

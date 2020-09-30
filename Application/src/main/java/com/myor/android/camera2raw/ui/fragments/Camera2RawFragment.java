@@ -253,8 +253,8 @@ public class Camera2RawFragment extends Fragment
 
     private static RelativeLayout mIsDetailsCorrectLayout;
 
-    private static String mPatientDetailsRawPath_1;
-    private static String mPatientDetailsRawPath_2;
+    private static String mPatientDetailsRawPath_1 = null;
+    private static String mPatientDetailsRawPath_2 = null;
 
     private static String mImagePath = "";
 
@@ -538,10 +538,10 @@ public class Camera2RawFragment extends Fragment
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 8;
 
-        if (mPendingUserCaptures == 1)
-            mPatientDetailsRawPath_2 = path;
-        else
+        if (mPatientDetailsRawPath_1 == null)
             mPatientDetailsRawPath_1 = path;
+        else
+            mPatientDetailsRawPath_2 = path;
 
         try {
             Bitmap previewBitmapPicture = BitmapFactory.decodeFile(path);
@@ -753,6 +753,9 @@ public class Camera2RawFragment extends Fragment
         b = file2.delete();
 
         Log.d("TAG", String.valueOf(b));
+
+        mPatientDetailsRawPath_1 = null;
+        mPatientDetailsRawPath_2 = null;
     }
 
     @Override
