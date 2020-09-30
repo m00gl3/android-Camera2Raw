@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.myor.android.camera2raw.R;
-import com.myor.android.camera2raw.ui.AutoFitTextureView;
 
 /**
  * A simple {@link Fragment} subclass.

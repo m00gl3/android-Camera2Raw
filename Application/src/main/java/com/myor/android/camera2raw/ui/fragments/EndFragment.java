@@ -16,7 +16,6 @@ import android.widget.ProgressBar;
 
 import com.myor.android.camera2raw.CloudManager;
 import com.myor.android.camera2raw.R;
-import com.myor.android.camera2raw.ui.AutoFitTextureView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +28,9 @@ public class EndFragment extends Fragment implements MyCallback {
 
     private String mPatientNumber;
     private String mPatientDetailsJpegPath;
-    private String mPatientDetailsRawPath;
+    private String mPatientDetailsRawPath1;
+    private String mPatientDetailsRawPath2;
+    private String mPatientDetailsVidPath;
 
     private static ProgressBar progressBar;
 
@@ -63,9 +64,11 @@ public class EndFragment extends Fragment implements MyCallback {
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
-        mPatientNumber = HandPhotoInstructionsFragmentArgs.fromBundle(getArguments()).getPatientNumber();
-        mPatientDetailsJpegPath = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
-        mPatientDetailsRawPath = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientDetailsRaw();
+        mPatientNumber = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientDetailsJpegPath = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
+        mPatientDetailsRawPath1 = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientDetailsRaw1();
+        mPatientDetailsRawPath2 = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientDetailsRaw2();
+        mPatientDetailsVidPath = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientDetailsVid();
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar_cyclic);
 

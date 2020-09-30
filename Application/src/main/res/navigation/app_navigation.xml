@@ -76,7 +76,38 @@
         android:label="Hand Camera"
         tools:layout="@layout/fragment_camera2_raw">
 
-        <action android:id="@+id/action_rawFragment_to_endFragment"
+        <action android:id="@+id/action_rawFragment_to_videoFragment"
+            app:destination="@id/videoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <argument
+            android:name="patientNumber"
+            app:argType="string"
+            android:defaultValue="0" />
+        <argument
+            android:name="patientDetailsJpeg"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="patientDetailsRaw1"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="patientDetailsRaw2"
+            app:argType="string"
+            android:defaultValue='""' />
+
+    </fragment>
+
+    <!-- Video Fragment -->
+    <fragment android:id="@+id/videoFragment"
+        android:name="com.myor.android.camera2raw.ui.fragments.Camera2VideoFragment"
+        android:label="Hand Video Capture"
+        tools:layout="@layout/fragment_camera">
+
+        <action android:id="@+id/action_videoFragment_to_endFragment"
             app:destination="@id/endFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -91,10 +122,17 @@
             app:argType="string"
             android:defaultValue='""' />
         <argument
-            android:name="patientDetailsRaw"
+            android:name="patientDetailsRaw1"
             app:argType="string"
             android:defaultValue='""' />
-
+        <argument
+            android:name="patientDetailsRaw2"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="patientDetailsVid"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 
     <!-- Last Fragment -->
@@ -112,7 +150,15 @@
             app:argType="string"
             android:defaultValue='""' />
         <argument
-            android:name="patientDetailsRaw"
+            android:name="patientDetailsRaw1"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="patientDetailsRaw2"
+            app:argType="string"
+            android:defaultValue='""' />
+        <argument
+            android:name="patientDetailsVid"
             app:argType="string"
             android:defaultValue='""' />
     </fragment>

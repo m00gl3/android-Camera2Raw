@@ -75,9 +75,9 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.myor.android.camera2raw.ui.AutoFitTextureView;
 import com.myor.android.camera2raw.CloudManager;
 import com.myor.android.camera2raw.R;
+import com.myor.android.camera2raw.camera.AutoFitTextureView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -685,6 +685,7 @@ public class Camera2JpegFragment extends Fragment
         btnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                deleteUnwantedFiles();
                 hidePreviewImage();
             }
         });
@@ -701,6 +702,13 @@ public class Camera2JpegFragment extends Fragment
                 }
             }
         };
+    }
+
+    private void deleteUnwantedFiles() {
+        File file = new File(mPatientDetailsJpegPath);
+        boolean b = file.delete();
+
+        Log.d("TAG", String.valueOf(b));
     }
 
     @Override
@@ -799,7 +807,7 @@ public class Camera2JpegFragment extends Fragment
                     if (mJpegImageReader == null || mJpegImageReader.getAndRetain() == null) {
                         mJpegImageReader = new RefCountedAutoCloseable<>(
                                 ImageReader.newInstance(largestJpeg.getWidth(),
-                                        largestJpeg.getHeight(), ImageFormat.JPEG, /*maxImages*/5));
+                                        largestJpeg.getHeight(), ImageFormat.JPEG, /*maxImages*/2));
                     }
                     mJpegImageReader.get().setOnImageAvailableListener(
                             mOnJpegImageAvailableListener, mBackgroundHandler);
