@@ -31,8 +31,16 @@
         android:label="Patient Information Camera"
         tools:layout="@layout/fragment_camera2_basic">
 
+
         <action android:id="@+id/action_jpegFragment_to_handPhotoInstructionsFragment"
             app:destination="@id/handPhotoInstructionsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action android:id="@+id/action_jpegFragment_to_uploadTestFragment"
+            app:destination="@id/uploadTestFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -138,7 +146,7 @@
     <!-- Last Fragment -->
     <fragment android:id="@+id/endFragment"
         android:name="com.myor.android.camera2raw.ui.fragments.EndFragment"
-        android:label="Hand Camera"
+        android:label="Upload Files"
         tools:layout="@layout/fragment_finish">
 
         <argument
@@ -161,5 +169,39 @@
             android:name="patientDetailsVid"
             app:argType="string"
             android:defaultValue='""' />
+
+        <action android:id="@+id/action_endFragment_to_firstFragment"
+            app:destination="@id/firstFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/firstFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <!-- Upload Test Fragment -->
+    <fragment android:id="@+id/uploadTestFragment"
+        android:name="com.myor.android.camera2raw.ui.fragments.TestUploadFragment"
+        android:label="Test Upload"
+        tools:layout="@layout/fragment_finish">
+
+        <argument
+            android:name="patientNumber"
+            app:argType="string"
+            android:defaultValue="0" />
+        <argument
+            android:name="patientDetailsJpeg"
+            app:argType="string"
+            android:defaultValue='""' />
+
+        <action android:id="@+id/action_uploadTestFragment_to_firstFragment"
+            app:destination="@id/firstFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@+id/firstFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

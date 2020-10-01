@@ -21,6 +21,7 @@
     <string name="end_process">לסיום התהליך אנא לחץ</string>
     <string name="action_submit">הגש</string>
     <string name="session_completed">Session Completed</string>
+    <string name="upload_failed">העלאת הקבצים נכשלה:\n</string>
 
     <string name="permission_request">This app needs permission for camera and audio recording.</string>
     <string name="camera_error">This device doesn\'t support Camera2 API.</string>

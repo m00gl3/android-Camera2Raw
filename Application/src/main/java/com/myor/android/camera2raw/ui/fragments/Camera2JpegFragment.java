@@ -672,6 +672,9 @@ public class Camera2JpegFragment extends Fragment
         btnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Uncomment this to move to the TestUpload Fragment
+               // Camera2JpegFragmentDirections.ActionJpegFragmentToUploadTestFragment action = Camera2JpegFragmentDirections.actionJpegFragmentToUploadTestFragment();
+
                 Camera2JpegFragmentDirections.ActionJpegFragmentToHandPhotoInstructionsFragment action = Camera2JpegFragmentDirections.actionJpegFragmentToHandPhotoInstructionsFragment();
                 action.setPatientNumber(mPatientNumber);
                 action.setPatientDetailsJpeg(mPatientDetailsJpegPath);
