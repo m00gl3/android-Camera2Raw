@@ -1330,7 +1330,7 @@ public class Camera2RawFragment extends Fragment
 
             // Swap the view dimensions for calculation as needed if they are rotated relative to
             // the sensor.
-            boolean swappedDimensions = totalRotation == 90 || totalRotation == 270;
+            boolean swappedDimensions = false; // totalRotation == 90 || totalRotation == 270;
             int rotatedViewWidth = viewWidth;
             int rotatedViewHeight = viewHeight;
             int maxPreviewWidth = displaySize.x;
