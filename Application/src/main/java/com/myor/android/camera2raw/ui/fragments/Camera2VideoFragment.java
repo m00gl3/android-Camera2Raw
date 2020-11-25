@@ -63,6 +63,8 @@ public class Camera2VideoFragment extends CameraVideoFragment {
     private String mOutputFilePath;
 
     private String mPatientNumber;
+    private String mPatientAge;
+    private String mPatientGender;
     private String mPatientDetailsJpegPath;
     private String mPatientDetailsRawPath1;
     private String mPatientDetailsRawPath2;
@@ -102,6 +104,8 @@ public class Camera2VideoFragment extends CameraVideoFragment {
         unbinder = ButterKnife.bind(this, view);
 
         mPatientNumber = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientAge = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientAge();
+        mPatientGender = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientGender();
         mPatientDetailsJpegPath = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
         mPatientDetailsRawPath1 = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientDetailsRaw1();
         mPatientDetailsRawPath2 = Camera2RawFragmentArgs.fromBundle(getArguments()).getPatientDetailsRaw2();
@@ -126,6 +130,8 @@ public class Camera2VideoFragment extends CameraVideoFragment {
         Camera2VideoFragmentDirections.ActionVideoFragmentToEndFragment action = Camera2VideoFragmentDirections.actionVideoFragmentToEndFragment();
 
         action.setPatientNumber(mPatientNumber);
+        action.setPatientAge(mPatientAge);
+        action.setPatientGender(mPatientGender);
         action.setPatientDetailsJpeg(mPatientDetailsJpegPath);
         action.setPatientDetailsRaw1(mPatientDetailsRawPath1);
         action.setPatientDetailsRaw2(mPatientDetailsRawPath2);

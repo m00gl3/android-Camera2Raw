@@ -28,6 +28,8 @@ public class TestUploadFragment extends Fragment implements MyCallback {
     private static CloudManager mCloudManager;
 
     private String mPatientNumber;
+    private String mPatientAge;
+    private String mPatientGender;
     private String mPatientDetailsJpegPath;
 
     private static ProgressBar progressBar;
@@ -82,12 +84,14 @@ public class TestUploadFragment extends Fragment implements MyCallback {
     }
 
     private void uploadFile(String path) {
-        mCloudManager.uploadFile(path, mPatientNumber, this);
+        mCloudManager.uploadFile(path, mPatientNumber, mPatientAge,mPatientGender ,this);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         mPatientNumber = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientAge = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientAge();
+        mPatientGender = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientGender();
         mPatientDetailsJpegPath = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
 
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar_cyclic);

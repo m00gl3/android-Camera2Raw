@@ -357,6 +357,8 @@ public class Camera2JpegFragment extends Fragment
     private long mCaptureTimer;
 
     private String mPatientNumber;
+    private String mPatientAge;
+    private String mPatientGender;
 
     private static ProgressBar progressBar;
 
@@ -663,6 +665,8 @@ public class Camera2JpegFragment extends Fragment
 
         // To move on to next fragment
         mPatientNumber = FirstFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientAge = FirstFragmentArgs.fromBundle(getArguments()).getPatientAge();
+        mPatientGender=FirstFragmentArgs.fromBundle(getArguments()).getPatientGender();
 
         mIsDetailsCorrectLayout = (RelativeLayout) view.findViewById(R.id.isDetailsCorrectLayout);
         mPreviewImageView = (ImageView) view.findViewById(R.id.preview);
@@ -677,6 +681,8 @@ public class Camera2JpegFragment extends Fragment
 
                 Camera2JpegFragmentDirections.ActionJpegFragmentToHandPhotoInstructionsFragment action = Camera2JpegFragmentDirections.actionJpegFragmentToHandPhotoInstructionsFragment();
                 action.setPatientNumber(mPatientNumber);
+                action.setPatientAge(mPatientAge);
+                action.setPatientGender(mPatientGender);
                 action.setPatientDetailsJpeg(mPatientDetailsJpegPath);
                 Navigation.findNavController(view).navigate(action);
 
@@ -1123,7 +1129,7 @@ public class Camera2JpegFragment extends Fragment
 
             // Swap the view dimensions for calculation as needed if they are rotated relative to
             // the sensor.
-            boolean swappedDimensions = false; // totalRotation == 90 || totalRotation == 270;
+            boolean swappedDimensions = true; // totalRotation == 90 || totalRotation == 270;
             int rotatedViewWidth = viewWidth;
             int rotatedViewHeight = viewHeight;
             int maxPreviewWidth = displaySize.x;

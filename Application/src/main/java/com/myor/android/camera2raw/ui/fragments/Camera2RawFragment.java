@@ -373,6 +373,8 @@ public class Camera2RawFragment extends Fragment
     private long mCaptureTimer;
 
     private String mPatientNumber;
+    private String mPatientAge;
+    private String mPatientGender;
     private String mPatientDetailsJpegPath;
 
     //**********************************************************************************************
@@ -694,6 +696,8 @@ public class Camera2RawFragment extends Fragment
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         mPatientNumber = HandPhotoInstructionsFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientAge = HandPhotoInstructionsFragmentArgs.fromBundle(getArguments()).getPatientAge();
+        mPatientGender = HandPhotoInstructionsFragmentArgs.fromBundle(getArguments()).getPatientGender();
         mPatientDetailsJpegPath = HandPhotoInstructionsFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
 
         Log.d("MyOr", "mPatientNumber = " + mPatientNumber);
@@ -714,6 +718,8 @@ public class Camera2RawFragment extends Fragment
                 Camera2RawFragmentDirections.ActionRawFragmentToVideoFragment action = Camera2RawFragmentDirections.actionRawFragmentToVideoFragment();
 
                 action.setPatientNumber(mPatientNumber);
+                action.setPatientAge(mPatientAge);
+                action.setPatientGender(mPatientGender);
                 action.setPatientDetailsJpeg(mPatientDetailsJpegPath);
                 action.setPatientDetailsRaw1(mPatientDetailsRawPath_1);
                 action.setPatientDetailsRaw2(mPatientDetailsRawPath_2);
@@ -806,6 +812,8 @@ public class Camera2RawFragment extends Fragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.picture: {
+                //Range<Long> a=getExposureRanges();
+                Range<Integer> b= getIsoRanges();
                 takePicture();
                 break;
             }
@@ -1143,18 +1151,19 @@ public class Camera2RawFragment extends Fragment
                         CaptureRequest.CONTROL_AF_MODE_AUTO);
             }
         }
+//        builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
 
         // If there is an auto-magical flash control mode available, use it, otherwise default to
         // the "on" mode, which is guaranteed to always be available.
-        if (contains(mCharacteristics.get(
-                        CameraCharacteristics.CONTROL_AE_AVAILABLE_MODES),
-                CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH)) {
-            builder.set(CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
-        } else {
-            builder.set(CaptureRequest.CONTROL_AE_MODE,
-                    CaptureRequest.CONTROL_AE_MODE_ON);
-        }
+//        if (contains(mCharacteristics.get(
+//                        CameraCharacteristics.CONTROL_AE_AVAILABLE_MODES),
+//                CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH)) {
+//            builder.set(CaptureRequest.CONTROL_AE_MODE,
+//                    CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+//        } else {
+//            builder.set(CaptureRequest.CONTROL_AE_MODE,
+//                    CaptureRequest.CONTROL_AE_MODE_ON);
+//        }
 
         // If there is an auto-magical white balance control mode available, use it.
         if (contains(mCharacteristics.get(
@@ -1178,27 +1187,36 @@ public class Camera2RawFragment extends Fragment
         */
 
         // Required for RAW capture
-       // captureRequestBuilder.set(CaptureRequest.STATISTICS_LENS_SHADING_MAP_MODE, CaptureRequest.STATISTICS_LENS_SHADING_MAP_MODE_ON);
-       // captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
-       // captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-       // captureRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long) ((214735991 - 13231) / 2));
-       // captureRequestBuilder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 0);
-       // captureRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, (10000 - 100) / 2);//设置 ISO，感光度
+        builder.set(CaptureRequest.STATISTICS_LENS_SHADING_MAP_MODE, CaptureRequest.STATISTICS_LENS_SHADING_MAP_MODE_ON);
+        builder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_OFF);
+        builder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+// session #1+2
+        //        builder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long) (3333333));
+//        builder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 0);
+//        builder.set(CaptureRequest.SENSOR_SENSITIVITY,60);//设置 ISO，感光度
+        // session #3+4
+//        builder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long) (1250000));
+//        builder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 0);
+//        builder.set(CaptureRequest.SENSOR_SENSITIVITY,190);//设置 ISO，感光度
+// session #5+6
+        builder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long) (1515151));
+        builder.set(CaptureRequest.CONTROL_AE_EXPOSURE_COMPENSATION, 0);
+        builder.set(CaptureRequest.SENSOR_SENSITIVITY,420);//设置 ISO，感光度
         ///////////////////////////
         // How to set FPS
         // Set the frame rate of the preview screen. Select a frame rate range depending on the actual situation.
         // Range over which the auto-exposure routine can adjust the capture frame rate to maintain good exposure.
         Range<Integer>[] fpsRanges = getFpsRanges();
+
        // builder.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, fpsRanges[0]);
 
         ///////////////////////////
         // How to set exposure time
-        builder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long) ((214735991 - 13231) / 2));
-
+//        builder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long) 59444);
         // https://github.com/mohankumar-s/android_camera2_manual/blob/master/Camera2ManualFragment.java
         // https://github.com/pinguo-yuyidong/Camera2/blob/master/app/src/main/java/us/yydcdut/androidltest/ui/DisplayFragment.java
         // ISO
-        builder.set(CaptureRequest.SENSOR_SENSITIVITY, (10000 - 100) / 2);
+//        builder.set(CaptureRequest.SENSOR_SENSITIVITY, 7000);
 
         /////
         // builder.set(CaptureRequest.CONTROL_MODE, CaptureRequest.CONTROL_MODE_AUTO);
@@ -1453,7 +1471,8 @@ public class Camera2RawFragment extends Fragment
                     mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AE_PRECAPTURE_TRIGGER,
                             CameraMetadata.CONTROL_AE_PRECAPTURE_TRIGGER_START);
                 }
-
+                mPreviewRequestBuilder.set(CaptureRequest.SENSOR_EXPOSURE_TIME, (long) (54444));
+                mPreviewRequestBuilder.set(CaptureRequest.SENSOR_SENSITIVITY, 7000);
                 // Update state machine to wait for auto-focus, auto-exposure, and
                 // auto-white-balance (aka. "3A") to converge.
                 mState = STATE_WAITING_FOR_3A_CONVERGENCE;

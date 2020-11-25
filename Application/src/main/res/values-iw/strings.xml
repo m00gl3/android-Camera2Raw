@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="enter_patient_id">להתחלה, אנא הקש את מספר המטופל</string>
+    <string name="enter_patient_age">גיל המטופל</string>
     <string name="action_continue">המשך</string>
     <string name="patient_number">מספר מטופל</string>
+    <string name="patient_age">גיל המטופל</string>
+    <string name="enter_patient_gender">מין המטופל</string>
+    <string name="radio_male">זכר</string>
+    <string name="radio_female">נקבה</string>
+
+
 
     <string name="request_permission">האפליקציה צריכה הרשאות מצלמה</string>
     <string name="description_info">מידע</string>
@@ -14,7 +21,7 @@
     <string name="are_all_details_visible">האם כל הפרטים הדרושים נמצאים בתמונה וברורים לקריאה?</string>
 
     <string name="hand_photo_instructions_title">הוראות לצילום הציפורניים</string>
-    <string name="hand_photo_instructions">this is text</string>
+    <string name="hand_photo_instructions">שים לב שארבעת הציפורניים בתוך חלון הצילום,\nאנא בקש מהמטופל לא לזוז במהלך הצילום</string>
 
     <string name="dont_move_fingers">אנא הנחה את המטופל להימנע מתנועה של האצבעות</string>
 

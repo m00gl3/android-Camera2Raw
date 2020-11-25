@@ -15,8 +15,14 @@
 -->
 <resources>
     <string name="enter_patient_id">To begin, enter patient number</string>
+    <string name="enter_patient_age">Enter patient\'s age:</string>
     <string name="action_continue">Continue</string>
     <string name="patient_number">Patient Number</string>
+    <string name="patient_age">Patient Age</string>
+    <string name="enter_patient_gender">Patient Gender</string>
+    <string name="radio_male">Male</string>
+    <string name="radio_female">Female</string>
+
 
     <string name="request_permission">This app needs camera permission.</string>
     <string name="description_info">Info</string>

@@ -27,21 +27,21 @@
         android:layout_marginTop="6dp"
         android:src="@drawable/my_or" />
 
+
     <TextView
         android:id="@+id/txtViewEnterPatientId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="32dp"
-        android:textAlignment="center"
+        android:layout_marginTop="200dp"
+        android:text="@string/enter_patient_id"
         android:textColor="#000"
-        android:text="@string/enter_patient_id" />
+        android:textSize="32dp"
+        />
 
     <EditText
         android:id="@+id/editTxtPatientNumber"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/txtViewEnterPatientId"
         android:hint="@string/patient_number"
@@ -49,6 +49,63 @@
         android:selectAllOnFocus="true"
         android:textSize="24dp" />
 
+    <TextView
+        android:id="@+id/txtViewEnterPatientAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/editTxtPatientNumber"
+        android:text="@string/enter_patient_age"
+        />
+
+
+    <EditText
+        android:id="@+id/editTxtPatientAge"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtViewEnterPatientAge"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/patient_age"
+        android:selectAllOnFocus="true"
+        android:textSize="24dp"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="3dp"
+        />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/editTxtPatientAge">
+
+        <TextView
+            android:id="@+id/txtViewEnterPatientGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="32dp"
+            android:text="@string/enter_patient_gender"
+            />
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_male" />
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_female" />
+
+    </RadioGroup>
     <Button
         android:id="@+id/btnContinue"
         android:layout_width="wrap_content"
@@ -57,4 +114,6 @@
         android:text="@string/action_continue"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>
+
+
 </RelativeLayout>

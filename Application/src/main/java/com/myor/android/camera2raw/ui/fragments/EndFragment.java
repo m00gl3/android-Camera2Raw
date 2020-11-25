@@ -33,6 +33,8 @@ public class EndFragment extends Fragment implements MyCallback {
     private static CloudManager mCloudManager;
 
     private String mPatientNumber;
+    private String mPatientAge;
+    private String mPatientGender;
     private String mPatientDetailsJpegPath;
     private String mPatientDetailsRawPath1;
     private String mPatientDetailsRawPath2;
@@ -137,12 +139,14 @@ public class EndFragment extends Fragment implements MyCallback {
     }
 
     private void uploadFile(String path) {
-        mCloudManager.uploadFile(path, mPatientNumber, this);
+        mCloudManager.uploadFile(path, mPatientNumber,mPatientAge,mPatientGender, this);
     }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         mPatientNumber = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientAge = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientAge();
+        mPatientGender = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientGender();
         mPatientDetailsJpegPath = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
         mPatientDetailsRawPath1 = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientDetailsRaw1();
         mPatientDetailsRawPath2 = Camera2VideoFragmentArgs.fromBundle(getArguments()).getPatientDetailsRaw2();

@@ -24,9 +24,9 @@ public class CloudManager {
         storageRef = storage.getReference();
     }
 
-    public void uploadFile(String filePath, String patientId, MyCallback callback) {
+    public void uploadFile(String filePath, String patientId, String patientAge,String patientGender, MyCallback callback) {
         Uri file = Uri.fromFile(new File(filePath));
-        StorageReference imageRef = storageRef.child(patientId + "/" + file.getLastPathSegment());
+        StorageReference imageRef = storageRef.child(patientId + "_" + patientAge + "_"+patientGender+"/" + file.getLastPathSegment());
         UploadTask uploadTask = imageRef.putFile(file);
 
         // Register observers to listen for when the download is done or if it fails

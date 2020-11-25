@@ -22,6 +22,8 @@ import com.myor.android.camera2raw.R;
  */
 public class HandPhotoInstructionsFragment extends Fragment {
     private String mPatientNumber;
+    private String mPatientAge;
+    private String mPatientGender;
     private String mPatientDetailsJpegPath;
 
     public HandPhotoInstructionsFragment() {
@@ -52,6 +54,8 @@ public class HandPhotoInstructionsFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
 
         mPatientNumber = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientNumber();
+        mPatientAge = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientAge();
+        mPatientGender = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientGender();
         mPatientDetailsJpegPath = Camera2JpegFragmentArgs.fromBundle(getArguments()).getPatientDetailsJpeg();
 
         Button btnContinue = view.findViewById(R.id.btnContinue);
@@ -60,6 +64,8 @@ public class HandPhotoInstructionsFragment extends Fragment {
             public void onClick(View view) {
                 HandPhotoInstructionsFragmentDirections.ActionHandPhotoInstructionsFragmentToRawFragment action = HandPhotoInstructionsFragmentDirections.actionHandPhotoInstructionsFragmentToRawFragment();
                 action.setPatientNumber(mPatientNumber);
+                action.setPatientAge(mPatientAge);
+                action.setPatientGender(mPatientGender);
                 action.setPatientDetailsJpeg(mPatientDetailsJpegPath);
                 Navigation.findNavController(view).navigate(action);
             }
